@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="jquery-3.5.1.js"></script>
+<head>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <meta charset="UTF-8">
+    <title>Signal Path</title>
+</head>
+<body class="body">
+<div id="app">
+    <div id="devices-pane">
+        <svg class="pane connectors-pane">
+            <connectors v-for="(device, index) in devices"
+                        v-bind:key="index"
+                        v-bind:inconnections="device.ports.in"
+                        v-bind:devindex="index"></connectors>
+        </svg>
+        <div id="devices" class="pane">
+            <device v-for="(device, index) in devices"
+                    v-bind:key="index"
+                    v-bind:device="device"
+                    v-bind:index="index"></device>
+
+        </div>
+        <svg id="connecting-pane">
+            <line id="connecting-line" x1="0" y1="0" x2="0" y2="0"></line>
+        </svg>
+    </div>
+
+    <!-- this element is after above so that it appears on top when scrolling -->
+    <transport></transport>
+    <action-buttons v-bind:prototypes="prototypes"></action-buttons>
+
+
+</div>
+</body>
+<script src="actionButtonsComponent.js"></script>
+<script src="transportComponent.js"></script>
+<script src="deviceComponent.js"></script>
+<script src="connectorsComponent.js"></script>
+<script src="index.js"></script>
+</html>

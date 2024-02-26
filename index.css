@@ -1,0 +1,386 @@
+:root {
+    --device-width: 200px;
+    --stroke: #999;
+    --midi-color: #46c;
+    --mod-color: #40a080;
+    --device-height: 100px;
+    --light-background: #444;
+    --dark-background: #2b2b2c;
+    --super-dark-background: #202020;
+    --device-port-width: 10px;
+    --device-port-label-width: 50px;
+    --color: #777;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    color: var(--color);
+    height: 100%;
+    width: 100%;
+}
+
+.body {
+    background-color: #3c3f41;
+    height: 100%;
+    width: 100%;
+}
+
+svg {
+    overflow: visible;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.pane {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#transport {
+    border-bottom: 1px solid var(--light-background);
+    top: 0;
+
+}
+
+.transport-button-container svg {
+    display: inline;
+    width: 100%;
+    height: 100%;
+}
+
+.transport-button-container {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    height: 30px;
+}
+
+button:focus {
+    outline: 0;
+    background-color: var(--light-background);
+}
+
+.pause-button-shape {
+    width: 8px;
+    height: 30px;
+}
+
+button {
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    background-color: inherit;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#pause-button {
+    display: none;
+}
+
+button:hover {
+    background-color: var(--light-background);
+    transition-duration: 0.4s;
+}
+
+button:active {
+    background-color: var(--super-dark-background);
+    transition-duration: 1ms;
+    /*border: 1px solid var(--light-background);*/
+}
+
+.button-bar {
+    padding-top: 7px;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: var(--dark-background);
+}
+
+#footer {
+    bottom: 0;
+    border-top: 1px solid var(--light-background);
+}
+
+#footer button {
+    border-radius: 50%;
+}
+
+#create-menu {
+    display: none;
+    position: absolute;
+    bottom: 37px;
+    left: 35px;
+    width: 130px;
+    max-height: 155px;
+    overflow: auto;
+
+    border: 1px solid #333;
+    border-bottom: none;
+    background-color: var(--dark-background);
+    box-shadow: 5px 10px 10px var(--dark-background);
+    list-style-type: none;
+}
+
+#create-menu li {
+    display: block;
+    padding: 3px;
+}
+
+#create-menu li:hover {
+    background-color: var(--light-background);
+    cursor: pointer;
+}
+
+#devices-pane {
+    margin-top: 61px;
+}
+
+#devices {
+    pointer-events: none;
+}
+
+.device-body {
+    display: grid;
+    grid-template-columns: var(--device-port-width) 180px var(--device-port-width);
+}
+
+.device {
+    position: absolute;
+    width: var(--device-width);
+    border: 1px solid;
+    background-color: var(--dark-background);
+    box-shadow: 5px 10px 10px var(--dark-background);
+    pointer-events: auto;
+    padding-bottom: 20px;
+}
+
+.draggable:hover {
+    cursor: move;
+}
+
+.connector {
+    stroke: var(--stroke);
+    stroke-width: 2;
+}
+
+.animate-stroke {
+    stroke-dasharray: 14 6;
+    animation: dashFrame 200ms linear infinite;
+}
+
+@keyframes dashFrame {
+    0% {
+        stroke-dashoffset: 20;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.connector:hover, .connector-shape:hover {
+    cursor: pointer;
+}
+
+.arrow, .button-shape , #connecting-line {
+    fill: var(--stroke);
+    stroke: var(--stroke);
+    stroke-width: 1;
+}
+
+.device-content {
+    padding-top: 4px;
+}
+
+.device-name {
+    color: #678;
+    border-bottom: 1px solid var(--color);
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 2px;
+}
+
+.device-details {
+    display: table;
+    width: 100%;
+}
+
+.device-details-row {
+    display: table-row;
+}
+
+.device-content-item {
+    display: table-cell;
+}
+
+.device-type-label {
+    font-weight: bold;
+    width: 70px;
+}
+
+.device-type-value {
+    color: #a03032;
+}
+
+.midi-cell {
+    display: table-cell;
+    font-family: 'Verdana', 'Courier New', monospace;
+    font-size: 8pt;
+    font-weight: 1;
+}
+
+.midi-value {
+    color: #6699ff;
+}
+
+.midi-row {
+    display: table-row;
+}
+
+.device-midi-table {
+    display: table;
+}
+
+.device-midi-data {
+    background-color: var(--light-background);
+    color: #aaa;
+    border: 1px solid;
+    padding: 3px;
+    max-height: 200px;
+    overflow: hidden;
+    margin-top: 3px;
+}
+
+.device-ports {
+    position: relative;
+    width: var(--device-port-width);
+}
+
+.device-ports-out {
+    pointer-events: visiblePainted;
+}
+
+.device-ports-in {
+    pointer-events: visiblePainted;
+    left: -10px;
+}
+
+.device-port {
+    height: 28px;
+}
+
+.device-port span {
+    position: relative;
+    display: block;
+    width: var(--device-port-label-width);
+    top: 5px;
+}
+
+.device-port-out span {
+    left: 15px;
+    text-align: left;
+}
+
+.device-port-in span {
+    left: calc( 4px - var(--device-port-label-width));
+    text-align: right;
+}
+
+.device-port-in svg {
+    left: calc(var(--device-port-label-width) - 10px);
+}
+
+.device-port svg {
+    position: static;
+}
+
+.port-circle {
+    stroke: var(--stroke);
+    fill: #666;
+    stroke-width: 3;
+}
+
+.device-port-in:hover {
+    cursor: cell;
+}
+
+.device-port-in .port-circle {
+    stroke-width: 2;
+}
+
+.device-port-mod .port-circle-in {
+    stroke: #90c090;
+    fill: var(--mod-color);
+}
+
+.device-port-mod .port-circle-out {
+    stroke: var(--mod-color);
+    fill: #373;
+}
+
+.device-port-mod span {
+    color: var(--mod-color);
+}
+
+.connector-mod {
+    stroke: var(--mod-color);
+}
+
+.arrow-mod {
+    fill: var(--mod-color);
+    stroke: var(--mod-color);
+}
+
+.device-port-midi .port-circle-in {
+    stroke: var(--midi-color);
+    fill: #6699ff;
+}
+
+.device-port-midi .port-circle-out {
+    stroke: var(--midi-color);
+    fill: #359;
+}
+
+.device-port-midi span {
+    color: var(--midi-color);
+}
+
+.connector-midi {
+    stroke: var(--midi-color);
+}
+
+.arrow-midi {
+    fill: var(--midi-color);
+    stroke: var(--midi-color);
+}
+
+.device-port-out svg:hover {
+    cursor: grab;
+}
+
+#connecting-line {
+    stroke-dasharray: 5 5;
+}
+
+
+#connecting-pane {
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
